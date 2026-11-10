@@ -1,6 +1,7 @@
 import { EventLog } from './components/EventLog'
 import { LEGACY_DONE_AT, LEGACY_STALL_AT, LegacyProgress } from './components/LegacyProgress'
 import { PriorityDoor } from './components/PriorityDoor'
+import { ResultMock } from './components/ResultMock'
 import { Shell } from './components/Shell'
 import { STAGE_DONE_AT, StageProgress } from './components/StageProgress'
 import { useElapsed } from './lib/useElapsed'
@@ -47,16 +48,16 @@ export default function App() {
   return (
     <>
       <VariantBar current={variant} />
-      <Shell>
-        <WatermarkNotice />
+      <Shell step={isDone ? 4 : 3}>
         {isDone ? (
-          <section className="rounded-2xl border border-[#e3e5e9] bg-white p-6 font-semibold">영상이 완성됐어요</section>
-        ) : variant === 'progress' ? (
-          <StageProgress elapsed={elapsed} />
+          <ResultMock />
         ) : (
-          <LegacyProgress elapsed={elapsed} />
+          <>
+            <WatermarkNotice />
+            {variant === 'progress' ? <StageProgress elapsed={elapsed} /> : <LegacyProgress elapsed={elapsed} />}
+          </>
         )}
-        {variant === 'door' && elapsed >= LEGACY_STALL_AT && <PriorityDoor />}
+        {variant === 'door' && !isDone && elapsed >= LEGACY_STALL_AT && <PriorityDoor />}
       </Shell>
       <EventLog />
     </>
