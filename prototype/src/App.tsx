@@ -1,6 +1,7 @@
 import { EventLog } from './components/EventLog'
 import { LEGACY_DONE_AT, LEGACY_STALL_AT, LegacyProgress } from './components/LegacyProgress'
 import { PriorityDoor } from './components/PriorityDoor'
+import { QualityPreview } from './components/QualityPreview'
 import { ResultMock } from './components/ResultMock'
 import { Shell } from './components/Shell'
 import { STAGE_DONE_AT, StageProgress } from './components/StageProgress'
@@ -10,6 +11,7 @@ const VARIANTS = {
   before: '지금 쇼더스',
   door: '지정 1순위: 우선 처리 Fake door',
   progress: '자유 1순위: 단계별 진행률',
+  quality: '자유 2순위: 만들면서 품질 보여 주기',
 } as const
 type Variant = keyof typeof VARIANTS
 
@@ -55,6 +57,7 @@ export default function App() {
           <>
             <WatermarkNotice />
             {variant === 'progress' ? <StageProgress elapsed={elapsed} /> : <LegacyProgress elapsed={elapsed} />}
+            {variant === 'quality' && <QualityPreview elapsed={elapsed} />}
           </>
         )}
         {variant === 'door' && !isDone && elapsed >= LEGACY_STALL_AT && <PriorityDoor />}
