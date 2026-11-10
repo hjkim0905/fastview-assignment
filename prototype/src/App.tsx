@@ -1,10 +1,13 @@
-import { LEGACY_DONE_AT, LegacyProgress } from './components/LegacyProgress'
+import { EventLog } from './components/EventLog'
+import { LEGACY_DONE_AT, LEGACY_STALL_AT, LegacyProgress } from './components/LegacyProgress'
+import { PriorityDoor } from './components/PriorityDoor'
 import { Shell } from './components/Shell'
 import { STAGE_DONE_AT, StageProgress } from './components/StageProgress'
 import { useElapsed } from './lib/useElapsed'
 
 const VARIANTS = {
   before: '지금 쇼더스',
+  door: '지정 1순위: 우선 처리 가짜 문',
   progress: '자유 1, 3순위: 단계별 진행률 + 문구',
 } as const
 type Variant = keyof typeof VARIANTS
@@ -61,7 +64,9 @@ export default function App() {
         ) : (
           <LegacyProgress elapsed={elapsed} />
         )}
+        {variant === 'door' && elapsed >= LEGACY_STALL_AT && <PriorityDoor />}
       </Shell>
+      <EventLog />
     </>
   )
 }
