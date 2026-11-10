@@ -5,7 +5,9 @@ import type { TrackedEvent } from '../lib/track'
 export function EventLog() {
   const [events, setEvents] = useState<TrackedEvent[]>([])
   useEffect(() => {
-    const onTracked = (e: Event) => setEvents((prev) => [...prev, (e as CustomEvent<TrackedEvent>).detail])
+    // 이 패널보다 먼저 마운트된 화면이 보낸 이벤트(배너 노출 등)를 놓치지 않게, 구독 전에 쌓인 것부터 읽는다
+    setEvents(window.__events ?? [])
+    const onTracked = () => setEvents(window.__events ?? [])
     window.addEventListener('tracked', onTracked)
     return () => window.removeEventListener('tracked', onTracked)
   }, [])
