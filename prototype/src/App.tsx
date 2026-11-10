@@ -9,9 +9,9 @@ import { useElapsed } from './lib/useElapsed'
 
 const VARIANTS = {
   before: '지금 쇼더스',
-  door: '지정 1순위: 우선 처리 Fake door',
-  progress: '자유 1순위: 단계별 진행률',
-  quality: '자유 2순위: 만들면서 품질 보여 주기',
+  door: '지정 1순위 · 우선 처리 Fake door',
+  progress: '자유 1순위 · 단계별 진행률',
+  quality: '자유 2순위 · 만들면서 품질 보여 주기',
 } as const
 type Variant = keyof typeof VARIANTS
 
@@ -22,12 +22,20 @@ function readVariant(): Variant {
 
 function VariantBar({ current }: { current: Variant }) {
   return (
-    <nav aria-label="버전 전환" className="sticky top-0 z-20 flex flex-wrap gap-2 bg-[#17181a] px-4 py-2 text-xs">
-      {(Object.keys(VARIANTS) as Variant[]).map((v) => (
-        <a key={v} href={`?v=${v}`} className={`rounded-full px-3 py-1 ${v === current ? 'bg-white text-black' : 'text-[#c9ccd3]'}`}>
-          {VARIANTS[v]}
-        </a>
-      ))}
+    <nav aria-label="프로토타입 버전" className="sticky top-0 z-20 bg-[#17181a] px-4 py-3">
+      <p className="text-xs text-[#c9ccd3]">프로토타입 버전 4개 · 눌러서 비교해 보세요 (바꾸면 처음부터 다시 재생돼요)</p>
+      <div className="mt-2 flex flex-wrap gap-2 text-sm">
+        {(Object.keys(VARIANTS) as Variant[]).map((v) => (
+          <a
+            key={v}
+            href={`?v=${v}`}
+            aria-current={v === current ? 'page' : undefined}
+            className={`rounded-full border px-3 py-1 ${v === current ? 'border-white bg-white font-semibold text-black' : 'border-white/30 text-white hover:border-white'}`}
+          >
+            {VARIANTS[v]}
+          </a>
+        ))}
+      </div>
     </nav>
   )
 }
