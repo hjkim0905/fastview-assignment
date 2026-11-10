@@ -3,7 +3,7 @@ import { track } from '../lib/track'
 
 const PRO_PRICE = '월 19,800원'
 
-// 가설 1순위: 빨리 받고 싶은 사용자가 우선 처리에 돈을 낼까. 기능은 만들지 않고 문만 놓아 클릭으로 수요를 잰다.
+// 가설 1순위: 빨리 받고 싶은 사용자가 우선 처리에 돈을 낼까. 기능은 만들지 않고 Fake door 만 놓아 클릭으로 수요를 잰다.
 // 진행률이 멈추는 순간(기다림이 가장 길게 느껴지는 때)에 보여 준다.
 export function PriorityDoor() {
   const [isOpen, setIsOpen] = useState(false)
