@@ -1,0 +1,7 @@
+node_modules
+.next
+notes/
+logs/
+captures/
+failures.md
+scripts/timeline-this-session.sh
