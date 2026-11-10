@@ -9,7 +9,13 @@ const HEADINGS = {
 }
 
 // 캡처 9~13번의 사이드바와 단계 탭을 단순하게 재현한다. 실제 화면과 픽셀 단위로 맞추지 않는다.
-export function Shell({ step, children }: { step: 3 | 4; children: ReactNode }) {
+interface ShellProps {
+  step: 3 | 4
+  creditBox?: ReactNode
+  children: ReactNode
+}
+
+export function Shell({ step, creditBox, children }: ShellProps) {
   const heading = HEADINGS[step]
   return (
     <div className="flex min-h-screen bg-canvas text-[#17181a]">
@@ -24,10 +30,14 @@ export function Shell({ step, children }: { step: 3 | 4; children: ReactNode }) 
           ))}
         </nav>
         <div className="mt-auto rounded-lg border border-white/10 p-3 text-xs">
-          <p className="text-[#8a8f99]">크레딧</p>
-          <p className="mt-1 text-base font-bold text-white">150 남음</p>
-          <div className="mt-2 h-1 rounded bg-brand" />
-          <p className="mt-2 text-[#8a8f99]">가입 환영 크레딧 100 · 11월 17일까지</p>
+          {creditBox ?? (
+            <>
+              <p className="text-[#8a8f99]">크레딧</p>
+              <p className="mt-1 text-base font-bold text-white">150 남음</p>
+              <div className="mt-2 h-1 rounded bg-brand" />
+              <p className="mt-2 text-[#8a8f99]">가입 환영 크레딧 100 · 11월 17일까지</p>
+            </>
+          )}
         </div>
         <nav className="mt-6 flex flex-col gap-3 text-xs">
           {SUB_MENU.map((item) => (
